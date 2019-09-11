@@ -1,6 +1,7 @@
 package com.example.marks.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +19,12 @@ public class Controller
 	ReportCardService reportCardService;
 	
 	@GetMapping(value="/getreportcard/{rollno}/{year}")
-	public ReportCard getReportCard(@PathVariable("rollno") int rollno, @PathVariable("year") int year)
+	public ReportCard getReportCard(@PathVariable("rollno") int rollNo, @PathVariable("year") int year)
 	{
+		System.out.println("Controller :: getReportCard()");
+		
 		ReportCard reportCard = new ReportCard();
+		reportCard = reportCardService.getReportCard(rollNo, year);
 		
 		return reportCard;
 	}
@@ -28,9 +32,16 @@ public class Controller
 	@PostMapping(value="/addreportcard")
 	public ReportCard addReportCard(@RequestBody ReportCard reportCard)
 	{
-		System.out.println("adding report card");
-		System.out.println("data -> " + reportCard.getRollNo() + " " + reportCard.getYear());
+		System.out.println("Controller :: addReportCard()");
 		
 		return reportCardService.addReportCard(reportCard);
+	}
+	
+	@DeleteMapping(value="deletereportcard/{rollno}/{year}")
+	public void deleteReportCard(@PathVariable("rollno") int rollNo,@PathVariable("year") int year)
+	{
+		System.out.println("Controller :: deleteReportCard()");
+		
+		reportCardService.deleteReportCard(rollNo, year);
 	}
 }

@@ -9,4 +9,6 @@ import com.example.marks.model.ReportCard;
 public interface ReportCardRepository extends MongoRepository<ReportCard, String> 
 {
 	ReportCard findByRollNoAndYear(int rollNo, int year);
+	
+	ReportCard findByRollNo(int rollNo);
 }
