@@ -12,7 +12,7 @@ import com.example.marks.model.ReportCard;
 import com.example.marks.service.ReportCardService;
 
 @RestController
-public class Controller 
+public class ReportCardController 
 {
 	
 	@Autowired
@@ -20,12 +20,15 @@ public class Controller
 	
 	@GetMapping(value="/getreportcard/{rollno}/{year}")
 	public ReportCard getReportCard(@PathVariable("rollno") int rollNo, @PathVariable("year") int year)
+	//@PostMapping(value="/getreportcard")
+	//public ReportCard getReportCard(@RequestBody RequestObject obj)
 	{
 		System.out.println("Controller :: getReportCard()");
 		
 		ReportCard reportCard = new ReportCard();
 		reportCard = reportCardService.getReportCard(rollNo, year);
 		
+		System.out.println(reportCard.get_id());
 		return reportCard;
 	}
 	
