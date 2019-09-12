@@ -9,6 +9,9 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 public class StudentApplication {
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) 
 	{
 		SpringApplication.run(StudentApplication.class, args);

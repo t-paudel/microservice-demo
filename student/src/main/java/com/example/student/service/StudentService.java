@@ -1,9 +1,15 @@
 package com.example.student.service;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,7 +26,9 @@ public class StudentService
 	
 	@Autowired
 	private StudentRepository studentRepo;
-
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 	
 	public StudentDetails addStudentDetails(StudentDetails data)
 	{
@@ -60,6 +68,43 @@ public class StudentService
 		
 		StudentDetails studentDetails = new StudentDetails();
 		studentDetails = studentRepo.findByRollNo(rollNo);
+		
+		return studentDetails;
+	}
+	
+	public StudentDetails updateStudentDetails(StudentDetails data, int rollNo)
+	{
+		System.out.println("StudentService :: updateStudentDetails()");
+
+		StudentDetails studentDetails = new StudentDetails();
+		Query query = new Query(Criteria.where("rollNo").is(rollNo));
+		Update update = new Update();
+		Field[] fields;
+		
+		studentDetails = studentRepo.findByRollNo(rollNo);
+		fields = StudentDetails.class.getDeclaredFields();
+		for(Field f:fields)
+		{
+			f.setAccessible(true);
+			try 
+			{
+				if(!Objects.isNull(f.get(data)))
+				{
+					update.set(f.getName(), f.get(data));
+				}
+			} 
+			catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("Fields getting updated = " + update);
+		
+		mongoTemplate.updateFirst(query, update, StudentDetails.class);
+		if(!Objects.isNull(data.getRollNo()))
+			studentDetails = studentRepo.findByRollNo(data.getRollNo());
+		else
+			studentDetails = studentRepo.findByRollNo(rollNo);
+		
 		
 		return studentDetails;
 	}

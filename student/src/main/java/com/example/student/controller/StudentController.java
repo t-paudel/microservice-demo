@@ -54,12 +54,12 @@ public class StudentController
 	}
 	
 	@PatchMapping(value="/updatestudentdetails/{rollNo}")
-	public StudentDetails updateStudentDetails(@PathVariable("rollNo")int rollNo)
+	public StudentDetails updateStudentDetails(@RequestBody StudentDetails body,@PathVariable("rollNo")int rollNo)
 	{
 		System.out.println("StudentController :: updateStudentDetails()");
 		
 		StudentDetails studentDetails = new StudentDetails();
-		studentDetails = studentService.getStudentDetails(rollNo);
+		studentDetails = studentService.updateStudentDetails(body, rollNo);
 		
 		return studentDetails;
 	}
