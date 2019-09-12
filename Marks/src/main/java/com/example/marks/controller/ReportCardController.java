@@ -20,8 +20,6 @@ public class ReportCardController
 	
 	@GetMapping(value="/getreportcard/{rollno}/{year}")
 	public ReportCard getReportCard(@PathVariable("rollno") int rollNo, @PathVariable("year") int year)
-	//@PostMapping(value="/getreportcard")
-	//public ReportCard getReportCard(@RequestBody RequestObject obj)
 	{
 		System.out.println("Controller :: getReportCard()");
 		

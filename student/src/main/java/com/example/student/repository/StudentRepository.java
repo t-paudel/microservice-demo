@@ -8,5 +8,7 @@ import com.example.student.model.StudentDetails;
 @Repository
 public interface StudentRepository extends MongoRepository<StudentDetails,String> 
 {
+	StudentDetails findByRollNo(int rollNo);
 	
+	StudentDetails findByRollNoAndYear(int rollNo, int year);
 }

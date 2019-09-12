@@ -3,8 +3,6 @@ package com.example.student.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.example.student.dto.ReportCard;
-
 @Document(collection="STUDENT_DETAILS")
 public class StudentDetails 
 {
@@ -15,7 +13,6 @@ public class StudentDetails
 	private int age;
 	private int rollNo;
 	private int year;
-	private ReportCard reportCard;
 	
 	
 	public String get_id() {
@@ -48,10 +45,4 @@ public class StudentDetails
 	public void setRollNo(int rollNo) {
 		this.rollNo = rollNo;
 	}
-	public ReportCard getReportCard() {
-		return reportCard;
-	}
-	public void setReportCard(ReportCard reportCard) {
-		this.reportCard = reportCard;
-	}	
 }
